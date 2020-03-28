@@ -1,6 +1,6 @@
 import pygame
 from pygame import gfxdraw
-from individual import Person
+from person import Person
 from constants import colors
 
 pygame.init()
@@ -12,8 +12,6 @@ window = pygame.display.set_mode((display_width, display_height), pygame.RESIZAB
 pygame.display.set_caption("Corona")
 clock = pygame.time.Clock()
 
-one_person = Person()
-
 run = True
 while run:
     pygame.time.delay(100)
@@ -24,8 +22,6 @@ while run:
         if event.type == pygame.VIDEORESIZE:
             window = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
         # print(event)
-
-    one_person.update(window)
 
     # green middle vertical line
     pygame.gfxdraw.line(window, int(window.get_width()/2), 0, int(window.get_width()/2), int(window.get_height()), colors['g'])
