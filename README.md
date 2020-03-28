@@ -1,5 +1,5 @@
 # coronaW
-corona
+To simulate the coronavirus impact on society using user input parameters. Rather than a purely mathematical model of exponential or logistic growth, we will use "Person" objects, which can be given different behavioral parameters, to simulate social interaction (or lack of) and thus the spread of the virus. So far, the model resembles the simulations done by 3B1B (which inspired this project). We will also implement an economical model for how quarantine may affect the individual in negative ways as well. The economical impacts of a pandemic like COVID-19 is very real at the individual level. People start to lose jobs, housing, and ultimately, happiness. We want to be able to quantify this data, and its relationship with the spread of the virus. 
 
 all may be subject to change
 
