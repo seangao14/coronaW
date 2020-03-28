@@ -9,4 +9,6 @@ colors = {
     'k': (0, 0, 0)  # black
 }
 
-PERSON_RADIUS = 10
+RADIUS = 10
+MAX_VEL = 1
+MAX_ACCEL = 0.2

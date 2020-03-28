@@ -4,8 +4,8 @@ from constants import colors
 
 pygame.init()
 
-display_width = 1600
-display_height = 900
+display_width = 500
+display_height = 250
 
 window = pygame.display.set_mode((display_width, display_height), pygame.RESIZABLE)
 pygame.display.set_caption("Corona")
@@ -15,7 +15,7 @@ community = pygame.Surface((int(window.get_width()/2-1), int(window.get_height()
 
 test_people = []
 
-for i in range(20):
+for i in range(50):
     test_people.append(Person(community))
 
 
