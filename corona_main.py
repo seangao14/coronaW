@@ -22,7 +22,7 @@ while run:
         if event.type == pygame.QUIT:
             run = False
         if event.type == pygame.VIDEORESIZE:
-            widnow = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
+            window = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
         # print(event)
 
     one_person.update(window)
