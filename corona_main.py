@@ -12,6 +12,14 @@ window = pygame.display.set_mode((display_width, display_height), pygame.RESIZAB
 pygame.display.set_caption("Corona")
 clock = pygame.time.Clock()
 
+community = pygame.Surface((int(window.get_width()/2-1), int(window.get_height())))
+
+test_people = []
+
+for i in range(20):
+    test_people.append(Person(community))
+
+
 run = True
 while run:
     # events
@@ -22,8 +30,15 @@ while run:
             window = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
         # print(event)
 
+    # draw
+    community = pygame.Surface((int(window.get_width() / 2 - 1), int(window.get_height())))
+
+    for _ in test_people:
+        _.update(community)
+    window.blit(community, (int(window.get_width() / 2 + 1), 0))
+
     # green middle vertical line
-    pygame.gfxdraw.line(window, int(window.get_width()/2), 0, int(window.get_width()/2), int(window.get_height()), colors['g'])
+    pygame.draw.line(window, colors['g'], (window.get_width()/2, 0), (window.get_width()/2, window.get_height()), 2)
     pygame.display.update()
 
     clock.tick(60)
