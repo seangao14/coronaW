@@ -16,7 +16,7 @@ community = pygame.Surface((int(window.get_width()/2-1), int(window.get_height()
 
 test_people = []
 
-for i in range(20):
+for i in range(9):
     test_people.append(Person(community))
 
 
@@ -33,10 +33,10 @@ while run:
     # draw
     community = pygame.Surface((int(window.get_width() / 2 - 1), int(window.get_height())))
 
-    for _ in test_people:
-        _.update(community)
-    window.blit(community, (int(window.get_width() / 2 + 1), 0))
+    for i in test_people:
+        i.update(community, test_people)
 
+    window.blit(community, (int(window.get_width() / 2 + 1), 0))
     # green middle vertical line
     pygame.draw.line(window, colors['g'], (window.get_width()/2, 0), (window.get_width()/2, window.get_height()), 2)
     pygame.display.update()

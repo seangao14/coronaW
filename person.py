@@ -17,22 +17,34 @@ class Person:
 
         self.state = 0
 
-    def update(self, win):
+    def update(self, win, people):
         self.edges(win)
         self.movement()
+        self.collision(people)
         pygame.draw.circle(win, colors['b'], (int(self.x_pos), int(self.y_pos)), PERSON_RADIUS)
 
     # objects will bounce off the edge
     def edges(self, win):
         if self.x_pos - PERSON_RADIUS <= 0:
-            self.x_vel = (-1) * self.x_vel
+            self.x_vel = -self.x_vel
         if self.y_pos - PERSON_RADIUS <= 0:
-            self.y_vel = (-1) * self.y_vel
+            self.y_vel = -self.y_vel
         if self.x_pos + PERSON_RADIUS >= win.get_width():
-            self.x_vel = (-1) * self.x_vel
+            self.x_vel = -self.x_vel
         if self.y_pos + PERSON_RADIUS >= win.get_height():
-            self.y_vel = (-1) * self.y_vel
+            self.y_vel = -self.y_vel
 
     def movement(self):
+        self.x_vel += self.x_accel
+        self.y_vel += self.y_accel
         self.x_pos += self.x_vel
         self.y_pos += self.y_vel
+
+    def collision(self, people):
+        for other in people:
+            if self is other:
+                continue
+            d = np.sqrt((self.x_pos - other.x_pos)**2 + (self.y_pos - other.y_pos)**2)
+            if d/2 > PERSON_RADIUS:
+                self.x_vel = -self.x_vel
+                self.y_vel = -self.y_vel
