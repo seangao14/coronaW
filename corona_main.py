@@ -1,21 +1,12 @@
 import pygame
 from pygame import gfxdraw
 from individual import Person
+from constants import colors
 
 pygame.init()
 
 display_width = 1600
 display_height = 900
-colors = {
-    'r': (255, 0, 0), # red
-    'g': (0, 255, 0), # green
-    'b': (0, 0, 255), # blue
-    'y': (255, 255, 0), # yellow
-    'c': (0, 255, 255), # cyan
-    'm': (255, 0, 255), # magenta
-    'w': (255, 255, 255), # white
-    'k': (0, 0, 0) # black
-}
 
 window = pygame.display.set_mode((display_width, display_height), pygame.RESIZABLE)
 pygame.display.set_caption("Corona")
