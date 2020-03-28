@@ -5,8 +5,6 @@ from constants import RADIUS
 from constants import MAX_VEL
 from constants import MAX_ACCEL
 
-# TODO: they go towards bottom
-
 class Person:
     def __init__(self, win):
         self.x_pos = np.random.random_sample()*(win.get_width() - RADIUS) + RADIUS/2
@@ -21,12 +19,15 @@ class Person:
         self.state = 0
 
         self.perception = 50
-        self.steering_speed = 1
+        self.steering_speed = 0.2
 
     def draw(self, win):
         pygame.draw.circle(win, colors['b'], (int(self.x_pos), int(self.y_pos)), RADIUS)
+        # pygame.draw.circle(win, colors['y'], (int(self.x_pos), int(self.y_pos)), self.perception, 1)
+        pygame.draw.aaline(win, colors['w'], (int(self.x_pos), int(self.y_pos)),
+                           (int(self.x_pos + 5*self.x_vel), int(self.y_pos + 5*self.y_vel)))
 
-
+# TODO: add random acceleration to make them more lifelike
     def update(self, win, people):
         self.distancing(people, self.perception, self.steering_speed)
         # self.collision_detection(people)
@@ -39,7 +40,7 @@ class Person:
         self.draw(win)
 
 
-# TODO: steer speed
+# TODO: add decay in acceleration
     def distancing(self, people, perc, steer):
         steering = np.zeros((2))
         count = 0
@@ -57,8 +58,8 @@ class Person:
             mag = np.linalg.norm(steering)
             steering = steering * MAX_VEL / mag
             steering -= np.array([self.x_vel, self.y_vel])
-        self.x_accel += steering[0]
-        self.y_accel += steering[1]
+        self.x_accel += steer * steering[0]
+        self.y_accel += steer * steering[1]
 
     # objects will bounce off the edge, and given opposite velocity and acceleration etc
     def edges(self, win):
