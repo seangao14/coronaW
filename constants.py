@@ -10,5 +10,5 @@ colors = {
 }
 
 RADIUS = 10
-MAX_VEL = 1
-MAX_ACCEL = 0.2
+MAX_VEL = 3
+MAX_ACCEL = 0.5

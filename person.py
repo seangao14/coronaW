@@ -5,6 +5,8 @@ from constants import RADIUS
 from constants import MAX_VEL
 from constants import MAX_ACCEL
 
+# TODO: they go towards bottom
+
 class Person:
     def __init__(self, win):
         self.x_pos = np.random.random_sample()*(win.get_width() - RADIUS) + RADIUS/2
@@ -21,18 +23,20 @@ class Person:
         self.perception = 50
         self.steering_speed = 1
 
+    def draw(self, win):
+        pygame.draw.circle(win, colors['b'], (int(self.x_pos), int(self.y_pos)), RADIUS)
+
 
     def update(self, win, people):
         self.distancing(people, self.perception, self.steering_speed)
-        self.collision_detection(people)
+        # self.collision_detection(people)
         self.edges(win)
         self.limit_accel()
         self.accelerate()
         self.limit_speed()
         self.movement()
         # print(self.x_vel, self.y_vel)
-
-        pygame.draw.circle(win, colors['b'], (int(self.x_pos), int(self.y_pos)), RADIUS)
+        self.draw(win)
 
 
 # TODO: steer speed
@@ -60,15 +64,19 @@ class Person:
     def edges(self, win):
         if self.x_pos - RADIUS <= 0:
             self.x_vel = -self.x_vel
+            self.x_accel = -self.x_accel
             self.x_pos = RADIUS
         if self.y_pos - RADIUS <= 0:
             self.y_vel = -self.y_vel
+            self.y_accel = -self.y_accel
             self.y_pos = RADIUS
         if self.x_pos + RADIUS >= win.get_width():
             self.x_vel = -self.x_vel
+            self.x_accel = -self.x_accel
             self.x_pos = win.get_width() - RADIUS
         if self.y_pos + RADIUS >= win.get_height():
             self.y_vel = -self.y_vel
+            self.y_accel = -self.y_accel
             self.y_pos = win.get_height() - RADIUS
 
     def accelerate(self):
@@ -131,21 +139,21 @@ class Person:
         self.y_vel = y_new
 
     def limit_accel(self):
-        if self.x_accel >= MAX_ACCEL:
+        if self.x_accel > MAX_ACCEL:
             self.x_accel = MAX_ACCEL
-        elif self.x_accel <= -MAX_ACCEL:
+        elif self.x_accel < -MAX_ACCEL:
             self.x_accel = -MAX_ACCEL
-        if self.y_accel >= MAX_ACCEL:
+        if self.y_accel > MAX_ACCEL:
             y_accel = MAX_ACCEL
-        elif self.y_accel <= -MAX_ACCEL:
+        elif self.y_accel < -MAX_ACCEL:
             self.y_accel = -MAX_ACCEL
 
     def limit_speed(self):
-        if self.x_vel >= MAX_VEL:
+        if self.x_vel > MAX_VEL:
             self.x_vel = MAX_VEL
-        elif self.x_vel <= -MAX_VEL:
+        elif self.x_vel < -MAX_VEL:
             self.x_vel = -MAX_VEL
-        if self.y_vel >= MAX_VEL:
+        if self.y_vel > MAX_VEL:
             self.y_vel = MAX_VEL
-        elif self.y_vel <= -MAX_VEL:
+        elif self.y_vel < -MAX_VEL:
             self.y_vel = -MAX_VEL
