@@ -1,5 +1,4 @@
 import pygame
-from pygame import gfxdraw
 from person import Person
 from constants import colors
 
@@ -16,7 +15,7 @@ community = pygame.Surface((int(window.get_width()/2-1), int(window.get_height()
 
 test_people = []
 
-for i in range(9):
+for i in range(20):
     test_people.append(Person(community))
 
 
