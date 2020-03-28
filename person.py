@@ -60,7 +60,7 @@ class Person:
         self.x_accel += steering[0]
         self.y_accel += steering[1]
 
-    # objects will bounce off the edge
+    # objects will bounce off the edge, and given opposite velocity and acceleration etc
     def edges(self, win):
         if self.x_pos - RADIUS <= 0:
             self.x_vel = -self.x_vel
@@ -86,7 +86,7 @@ class Person:
     def movement(self):
         self.x_pos += self.x_vel
         self.y_pos += self.y_vel
-        if self.x_vel > MAX_VEL or self.y_vel > MAX_VEL:
+        if np.absolute(self.x_vel) > MAX_VEL or np.absolute(self.y_vel) > MAX_VEL:
             print("SIR YOU'RE OVER THE SPEED LIMIT")
 
     def collision_detection(self, people):
@@ -144,7 +144,7 @@ class Person:
         elif self.x_accel < -MAX_ACCEL:
             self.x_accel = -MAX_ACCEL
         if self.y_accel > MAX_ACCEL:
-            y_accel = MAX_ACCEL
+            self.y_accel = MAX_ACCEL
         elif self.y_accel < -MAX_ACCEL:
             self.y_accel = -MAX_ACCEL
 
