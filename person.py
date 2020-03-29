@@ -35,6 +35,8 @@ class Person:
     def update(self, win, people):
         self.distancing(people, self.perception, self.steering_speed)
         # self.collision_detection(people)
+        self.accel_polish()
+
         self.edges(win)
         self.limit_accel()
         self.accelerate()
@@ -64,6 +66,14 @@ class Person:
         self.x_accel += steer * steering[0]
         self.y_accel += steer * steering[1]
 
+    # polishes acceleration by introducing random acc, and decreases accel over time
+    def accel_polish(self):
+        self.x_accel += (np.random.random_sample()*2 - 1)*MAX_ACCEL/3
+        self.y_accel += (np.random.random_sample()*2 - 1)*MAX_ACCEL/3
+        self.x_accel *= 0.8
+        self.y_accel *= 0.8
+
+    # ------------------------ SHOULD BE DONE AND DO NOT REQUIRE CHANGES ----------
     # objects will bounce off the edge, and given opposite velocity and acceleration etc
     def edges(self, win):
         if self.x_pos - 0 <= 0:
