@@ -20,5 +20,7 @@ START_HEIGHT = 600
 START_PERSONS = 100
 START_PERCEPTION = 35
 START_STEERING = 0.2
+RANDOM_ACCEL_COE = 3 # higher is less random
+ACCEL_DECAY = 0.8    # lower is more decay
 
 SHOW_VELOCITY = 1

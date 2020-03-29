@@ -68,10 +68,10 @@ class Person:
 
     # polishes acceleration by introducing random acc, and decreases accel over time
     def accel_polish(self):
-        self.x_accel += (np.random.random_sample()*2 - 1)*MAX_ACCEL/3
-        self.y_accel += (np.random.random_sample()*2 - 1)*MAX_ACCEL/3
-        self.x_accel *= 0.8
-        self.y_accel *= 0.8
+        self.x_accel += (np.random.random_sample()*2 - 1)*MAX_ACCEL/RANDOM_ACCEL_COE
+        self.y_accel += (np.random.random_sample()*2 - 1)*MAX_ACCEL/RANDOM_ACCEL_COE
+        self.x_accel *= ACCEL_DECAY
+        self.y_accel *= ACCEL_DECAY
 
     # ------------------------ SHOULD BE DONE AND DO NOT REQUIRE CHANGES ----------
     # objects will bounce off the edge, and given opposite velocity and acceleration etc
