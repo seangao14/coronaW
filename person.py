@@ -162,22 +162,3 @@ class Person:
         self.x_vel = x_new
         self.y_vel = y_new
 
-    def limit_accel(self):
-        if self.x_accel > MAX_ACCEL:
-            self.x_accel = MAX_ACCEL
-        elif self.x_accel < -MAX_ACCEL:
-            self.x_accel = -MAX_ACCEL
-        if self.y_accel > MAX_ACCEL:
-            self.y_accel = MAX_ACCEL
-        elif self.y_accel < -MAX_ACCEL:
-            self.y_accel = -MAX_ACCEL
-
-    def limit_speed(self):
-        if self.x_vel > MAX_VEL:
-            self.x_vel = MAX_VEL
-        elif self.x_vel < -MAX_VEL:
-            self.x_vel = -MAX_VEL
-        if self.y_vel > MAX_VEL:
-            self.y_vel = MAX_VEL
-        elif self.y_vel < -MAX_VEL:
-            self.y_vel = -MAX_VEL
