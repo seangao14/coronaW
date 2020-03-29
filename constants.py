@@ -9,6 +9,8 @@ colors = {
     'k': (0, 0, 0)  # black
 }
 
+
+
 RADIUS = 10
 MAX_VEL = 3
 MAX_ACCEL = 0.5
@@ -18,3 +20,5 @@ START_HEIGHT = 600
 START_PERSONS = 100
 START_PERCEPTION = 35
 START_STEERING = 0.2
+
+SHOW_VELOCITY = 1

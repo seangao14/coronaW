@@ -2,13 +2,14 @@ import numpy as np
 import pygame
 from constants import *
 
+
 class Person:
     def __init__(self, win):
-        self.x_pos = np.random.random_sample()*(win.get_width() - RADIUS) + RADIUS/2
-        self.y_pos = np.random.random_sample()*(win.get_height() - RADIUS) + RADIUS/2
+        self.x_pos = np.random.random_sample() * (win.get_width() - RADIUS) + RADIUS / 2
+        self.y_pos = np.random.random_sample() * (win.get_height() - RADIUS) + RADIUS / 2
 
-        self.x_vel = np.random.random_sample()*MAX_VEL
-        self.y_vel = np.random.random_sample()*MAX_VEL
+        self.x_vel = np.random.random_sample() * MAX_VEL
+        self.y_vel = np.random.random_sample() * MAX_VEL
 
         self.x_accel = 0
         self.y_accel = 0
@@ -24,11 +25,12 @@ class Person:
         # pygame.draw.circle(win, colors['y'], (int(self.x_pos), int(self.y_pos)), self.perception, 1)
 
         # Draw velocity vector
-        pygame.draw.aaline(win, colors['w'], (int(self.x_pos), int(self.y_pos)),
-                           (int(self.x_pos + 5*self.x_vel), int(self.y_pos + 5*self.y_vel)))
+        if SHOW_VELOCITY:
+            pygame.draw.aaline(win, colors['w'], (int(self.x_pos), int(self.y_pos)),
+                               (int(self.x_pos + 5 * self.x_vel), int(self.y_pos + 5 * self.y_vel)))
 
-# TODO: add random acceleration to make them more lifelike
-#       optimization issues?
+    # TODO: add random acceleration to make them more lifelike
+    #       optimization issues?
 
     def update(self, win, people):
         self.distancing(people, self.perception, self.steering_speed)
@@ -41,8 +43,7 @@ class Person:
         # print(self.x_vel, self.y_vel)
         self.draw(win)
 
-
-# TODO: add decay in acceleration
+    # TODO: add decay in acceleration
     def distancing(self, people, perc, steer):
         steering = np.zeros((2))
         count = 0
@@ -52,7 +53,7 @@ class Person:
             d = np.sqrt((self.x_pos - other.x_pos) ** 2 + (self.y_pos - other.y_pos) ** 2)
             if d < perc:
                 diff = np.array([self.x_pos - other.x_pos, self.y_pos - other.y_pos])
-                diff = diff / (d**2)
+                diff = diff / (d ** 2)
                 steering += diff
                 count += 1
         if count != 0:
@@ -160,3 +161,23 @@ class Person:
             y_new = self_speed * np.sin(np.radians(angle))
         self.x_vel = x_new
         self.y_vel = y_new
+
+    def limit_accel(self):
+        if self.x_accel > MAX_ACCEL:
+            self.x_accel = MAX_ACCEL
+        elif self.x_accel < -MAX_ACCEL:
+            self.x_accel = -MAX_ACCEL
+        if self.y_accel > MAX_ACCEL:
+            self.y_accel = MAX_ACCEL
+        elif self.y_accel < -MAX_ACCEL:
+            self.y_accel = -MAX_ACCEL
+
+    def limit_speed(self):
+        if self.x_vel > MAX_VEL:
+            self.x_vel = MAX_VEL
+        elif self.x_vel < -MAX_VEL:
+            self.x_vel = -MAX_VEL
+        if self.y_vel > MAX_VEL:
+            self.y_vel = MAX_VEL
+        elif self.y_vel < -MAX_VEL:
+            self.y_vel = -MAX_VEL
