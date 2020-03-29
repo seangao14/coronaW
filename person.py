@@ -1,9 +1,6 @@
 import numpy as np
 import pygame
-from constants import colors
-from constants import RADIUS
-from constants import MAX_VEL
-from constants import MAX_ACCEL
+from constants import *
 
 class Person:
     def __init__(self, win):
@@ -18,8 +15,8 @@ class Person:
 
         self.state = 0
 
-        self.perception = 50
-        self.steering_speed = 0.2
+        self.perception = START_PERCEPTION
+        self.steering_speed = START_STEERING
 
     def draw(self, win):
         pygame.draw.circle(win, colors['b'], (int(self.x_pos), int(self.y_pos)), RADIUS)
@@ -28,6 +25,8 @@ class Person:
                            (int(self.x_pos + 5*self.x_vel), int(self.y_pos + 5*self.y_vel)))
 
 # TODO: add random acceleration to make them more lifelike
+#       optimization issues?
+
     def update(self, win, people):
         self.distancing(people, self.perception, self.steering_speed)
         # self.collision_detection(people)
@@ -63,22 +62,22 @@ class Person:
 
     # objects will bounce off the edge, and given opposite velocity and acceleration etc
     def edges(self, win):
-        if self.x_pos - RADIUS <= 0:
+        if self.x_pos - 0 <= 0:
             self.x_vel = -self.x_vel
             self.x_accel = -self.x_accel
-            self.x_pos = RADIUS
-        if self.y_pos - RADIUS <= 0:
+            self.x_pos = 0
+        if self.y_pos - 0 <= 0:
             self.y_vel = -self.y_vel
             self.y_accel = -self.y_accel
-            self.y_pos = RADIUS
-        if self.x_pos + RADIUS >= win.get_width():
+            self.y_pos = 0
+        if self.x_pos + 0 >= win.get_width():
             self.x_vel = -self.x_vel
             self.x_accel = -self.x_accel
-            self.x_pos = win.get_width() - RADIUS
-        if self.y_pos + RADIUS >= win.get_height():
+            self.x_pos = win.get_width() - 0
+        if self.y_pos + 0 >= win.get_height():
             self.y_vel = -self.y_vel
             self.y_accel = -self.y_accel
-            self.y_pos = win.get_height() - RADIUS
+            self.y_pos = win.get_height() - 0
 
     def accelerate(self):
         self.x_vel += self.x_accel
