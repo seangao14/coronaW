@@ -4,7 +4,7 @@ from constants import *
 
 
 class Person:
-    def __init__(self, win):
+    def __init__(self, win, s):
         self.x_pos = np.random.random_sample() * (win.get_width() - RADIUS) + RADIUS / 2
         self.y_pos = np.random.random_sample() * (win.get_height() - RADIUS) + RADIUS / 2
 
@@ -14,23 +14,25 @@ class Person:
         self.x_accel = 0
         self.y_accel = 0
 
-        self.state = 0
+        self.state = s
+        # 0: healthy, 1: infected, 2: asympomatic carrier, 3: immune, 4: dead
 
         self.perception = START_PERCEPTION
         self.steering_speed = START_STEERING
 
+        self.rad_i = START_RAD_I
+        self.rate_i = START_RATE_I
+
     def draw(self, win):
         # Draw person as circle
-        pygame.draw.circle(win, colors['b'], (int(self.x_pos), int(self.y_pos)), RADIUS)
+        pygame.draw.circle(win, COLORS[self.state], (int(self.x_pos), int(self.y_pos)), RADIUS)
         # pygame.draw.circle(win, colors['y'], (int(self.x_pos), int(self.y_pos)), self.perception, 1)
 
         # Draw velocity vector
         if SHOW_VELOCITY:
-            pygame.draw.aaline(win, colors['w'], (int(self.x_pos), int(self.y_pos)),
+            pygame.draw.aaline(win, COLORS[3], (int(self.x_pos), int(self.y_pos)),
                                (int(self.x_pos + 5 * self.x_vel), int(self.y_pos + 5 * self.y_vel)))
 
-    # TODO: add random acceleration to make them more lifelike
-    #       optimization issues?
 
     def update(self, win, people):
         self.distancing(people, self.perception, self.steering_speed)
@@ -44,6 +46,11 @@ class Person:
         self.movement()
         # print(self.x_vel, self.y_vel)
         self.draw(win)
+
+    def infection(self, people):
+        if self.state == 1 or self.state == 2:
+            pass
+
 
     # TODO: add decay in acceleration
     def distancing(self, people, perc, steer):

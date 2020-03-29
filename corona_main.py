@@ -15,9 +15,9 @@ community = pygame.Surface((int(window.get_width()/2-1), int(window.get_height()
 
 test_people = []
 
-for i in range(START_PERSONS):
-    test_people.append(Person(community))
 
+for i in range(START_PERSONS):
+    test_people.append(Person(community, 1))
 
 run = True
 while run:
@@ -39,7 +39,7 @@ while run:
     # add subsurfaces to window
     window.blit(community, (int(window.get_width() / 2 + 1), 0))
     # green middle vertical line
-    pygame.draw.line(window, colors['g'], (window.get_width()/2, 0), (window.get_width()/2, window.get_height()), 2)
+    pygame.draw.line(window, COLORS[4], (window.get_width() / 2, 0), (window.get_width() / 2, window.get_height()), 2)
     pygame.display.update()
 
     clock.tick(60)
