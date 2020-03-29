@@ -19,8 +19,11 @@ class Person:
         self.steering_speed = START_STEERING
 
     def draw(self, win):
+        # Draw person as circle
         pygame.draw.circle(win, colors['b'], (int(self.x_pos), int(self.y_pos)), RADIUS)
         # pygame.draw.circle(win, colors['y'], (int(self.x_pos), int(self.y_pos)), self.perception, 1)
+
+        # Draw velocity vector
         pygame.draw.aaline(win, colors['w'], (int(self.x_pos), int(self.y_pos)),
                            (int(self.x_pos + 5*self.x_vel), int(self.y_pos + 5*self.y_vel)))
 
