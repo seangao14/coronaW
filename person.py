@@ -19,8 +19,11 @@ class Person:
         self.steering_speed = START_STEERING
 
     def draw(self, win):
+        # Draw person as circle
         pygame.draw.circle(win, colors['b'], (int(self.x_pos), int(self.y_pos)), RADIUS)
         # pygame.draw.circle(win, colors['y'], (int(self.x_pos), int(self.y_pos)), self.perception, 1)
+
+        # Draw velocity vector
         pygame.draw.aaline(win, colors['w'], (int(self.x_pos), int(self.y_pos)),
                            (int(self.x_pos + 5*self.x_vel), int(self.y_pos + 5*self.y_vel)))
 
@@ -89,17 +92,37 @@ class Person:
         if np.absolute(self.x_vel) > MAX_VEL or np.absolute(self.y_vel) > MAX_VEL:
             print("SIR YOU'RE OVER THE SPEED LIMIT")
 
+    def limit_accel(self):
+        if self.x_accel > MAX_ACCEL:
+            self.x_accel = MAX_ACCEL
+        elif self.x_accel < -MAX_ACCEL:
+            self.x_accel = -MAX_ACCEL
+        if self.y_accel > MAX_ACCEL:
+            self.y_accel = MAX_ACCEL
+        elif self.y_accel < -MAX_ACCEL:
+            self.y_accel = -MAX_ACCEL
+
+    def limit_speed(self):
+        if self.x_vel > MAX_VEL:
+            self.x_vel = MAX_VEL
+        elif self.x_vel < -MAX_VEL:
+            self.x_vel = -MAX_VEL
+        if self.y_vel > MAX_VEL:
+            self.y_vel = MAX_VEL
+        elif self.y_vel < -MAX_VEL:
+            self.y_vel = -MAX_VEL
+
     def collision_detection(self, people):
         for other in people:
             if self is other:
                 continue
-            d = np.sqrt((self.x_pos - other.x_pos)**2 + (self.y_pos - other.y_pos)**2)
-            if d/2 < RADIUS:
+            d = np.sqrt((self.x_pos - other.x_pos) ** 2 + (self.y_pos - other.y_pos) ** 2)
+            if d / 2 < RADIUS:
                 self.collide(other)
 
     def collide(self, other):
-        self_speed = np.sqrt(self.x_vel**2 + self.y_vel**2)
-        other_speed = np.sqrt(other.x_vel**2 + other.y_vel**2)
+        self_speed = np.sqrt(self.x_vel ** 2 + self.y_vel ** 2)
+        other_speed = np.sqrt(other.x_vel ** 2 + other.y_vel ** 2)
         x_diff = -(self.x_pos - other.x_pos)
         y_diff = -(self.y_pos - other.y_pos)
 
@@ -137,23 +160,3 @@ class Person:
             y_new = self_speed * np.sin(np.radians(angle))
         self.x_vel = x_new
         self.y_vel = y_new
-
-    def limit_accel(self):
-        if self.x_accel > MAX_ACCEL:
-            self.x_accel = MAX_ACCEL
-        elif self.x_accel < -MAX_ACCEL:
-            self.x_accel = -MAX_ACCEL
-        if self.y_accel > MAX_ACCEL:
-            self.y_accel = MAX_ACCEL
-        elif self.y_accel < -MAX_ACCEL:
-            self.y_accel = -MAX_ACCEL
-
-    def limit_speed(self):
-        if self.x_vel > MAX_VEL:
-            self.x_vel = MAX_VEL
-        elif self.x_vel < -MAX_VEL:
-            self.x_vel = -MAX_VEL
-        if self.y_vel > MAX_VEL:
-            self.y_vel = MAX_VEL
-        elif self.y_vel < -MAX_VEL:
-            self.y_vel = -MAX_VEL
