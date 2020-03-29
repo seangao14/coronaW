@@ -1,12 +1,11 @@
 import pygame
-from pygame import gfxdraw
 from person import Person
-from constants import colors
+from constants import *
 
 pygame.init()
 
-display_width = 1600
-display_height = 900
+display_width = START_WIDTH
+display_height = START_HEIGHT
 
 window = pygame.display.set_mode((display_width, display_height), pygame.RESIZABLE)
 pygame.display.set_caption("Corona")
@@ -16,7 +15,7 @@ community = pygame.Surface((int(window.get_width()/2-1), int(window.get_height()
 
 test_people = []
 
-for i in range(20):
+for i in range(START_PERSONS):
     test_people.append(Person(community))
 
 
@@ -33,10 +32,10 @@ while run:
     # draw
     community = pygame.Surface((int(window.get_width() / 2 - 1), int(window.get_height())))
 
-    for _ in test_people:
-        _.update(community)
-    window.blit(community, (int(window.get_width() / 2 + 1), 0))
+    for i in test_people:
+        i.update(community, test_people)
 
+    window.blit(community, (int(window.get_width() / 2 + 1), 0))
     # green middle vertical line
     pygame.draw.line(window, colors['g'], (window.get_width()/2, 0), (window.get_width()/2, window.get_height()), 2)
     pygame.display.update()
