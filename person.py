@@ -113,6 +113,8 @@ class Person:
         elif self.y_vel < -MAX_VEL:
             self.y_vel = -MAX_VEL
 
+
+    # these methods probably won't be used, just storing them at the bottom
     def collision_detection(self, people):
         for other in people:
             if self is other:
