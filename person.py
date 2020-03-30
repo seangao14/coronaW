@@ -23,6 +23,8 @@ class Person:
         self.rad_i = START_RAD_I
         self.rate_i = START_RATE_I
 
+        self.distance_a = np.array([])
+
     def draw(self, win):
         # Draw person as circle
         pygame.draw.circle(win, COLORS[self.state], (int(self.x_pos), int(self.y_pos)), RADIUS)
@@ -35,6 +37,8 @@ class Person:
 
 
     def update(self, win, people):
+        self.get_distance(people)
+
         self.distancing(people, self.perception, self.steering_speed)
         # self.collision_detection(people)
         self.accel_polish()
@@ -52,7 +56,8 @@ class Person:
             pass
 
 
-    # TODO: add decay in acceleration
+    # TODO: change indexing such that 1 checks 2, 3...
+    #       2 checks 3, 4, etc... so that there are not duplicate calculations
     def distancing(self, people, perc, steer):
         steering = np.zeros((2))
         count = 0
@@ -72,6 +77,14 @@ class Person:
             steering -= np.array([self.x_vel, self.y_vel])
         self.x_accel += steer * steering[0]
         self.y_accel += steer * steering[1]
+
+    def get_distance(self, people):
+        self.distance_a = []
+        for other in people:
+            if self is other:
+                self.distance_a.append(RADIUS*2 + 1)
+            else:
+                pass
 
     # polishes acceleration by introducing random acc, and decreases accel over time
     def accel_polish(self):

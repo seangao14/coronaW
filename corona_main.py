@@ -17,7 +17,7 @@ test_people = []
 
 
 for i in range(START_PERSONS):
-    test_people.append(Person(community, 1))
+    test_people.append(Person(community, 0))
 
 run = True
 while run:
