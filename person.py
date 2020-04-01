@@ -23,7 +23,7 @@ class Person:
         self.rad_i = START_RAD_I
         self.rate_i = START_RATE_I
 
-        self.distances = []
+        self.distances = {}
 
     def draw(self, win):
         # Draw person as circle
@@ -37,7 +37,9 @@ class Person:
 
 
     def update(self, win, people):
-        # self.get_distance(people)
+        self.get_distance(people)
+
+        # print(self.distances)
 
         self.distancing(people, self.perception, self.steering_speed)
         # self.collision_detection(people)
@@ -86,7 +88,12 @@ class Person:
         locs = []
         for other in people:
             locs.append([other.x_pos, other.y_pos])
-        self.distances = pdist(locs)
+        d = np.array(pdist(locs))
+        index = 0
+        for i in range(len(people)):
+            for j in range(i+1, len(people)):
+                self.distances[i, j] = d[index]
+                index += 1
 
 
     # polishes acceleration by introducing random acc, and decreases accel over time
