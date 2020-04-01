@@ -23,7 +23,7 @@ class Person:
         self.rad_i = START_RAD_I
         self.rate_i = START_RATE_I
 
-        self.distance_a = np.array([])
+        self.distances = []
 
     def draw(self, win):
         # Draw person as circle
@@ -37,18 +37,19 @@ class Person:
 
 
     def update(self, win, people):
-        self.get_distance(people)
+        # self.get_distance(people)
 
         self.distancing(people, self.perception, self.steering_speed)
         # self.collision_detection(people)
         self.accel_polish()
 
+        # applying speeds and cleaning up
         self.edges(win)
         self.limit_accel()
         self.accelerate()
         self.limit_speed()
         self.movement()
-        # print(self.x_vel, self.y_vel)
+
         self.draw(win)
 
     def infection(self, people):
@@ -79,12 +80,13 @@ class Person:
         self.y_accel += steer * steering[1]
 
 
-    # TODO:
+    # TODO: WHY THIS IS FUCKED:
+    #       should be called every frame, not every object update.
     def get_distance(self, people):
-        locs = np.array([])
+        locs = []
         for other in people:
             locs.append([other.x_pos, other.y_pos])
-        return pdist(locs)
+        self.distances = pdist(locs)
 
 
     # polishes acceleration by introducing random acc, and decreases accel over time
