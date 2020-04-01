@@ -1,7 +1,7 @@
 import numpy as np
 import pygame
+from scipy.spatial.distance import pdist
 from constants import *
-
 
 class Person:
     def __init__(self, win, s):
@@ -78,13 +78,14 @@ class Person:
         self.x_accel += steer * steering[0]
         self.y_accel += steer * steering[1]
 
+
+    # TODO:
     def get_distance(self, people):
-        self.distance_a = []
+        locs = np.array([])
         for other in people:
-            if self is other:
-                self.distance_a.append(RADIUS*2 + 1)
-            else:
-                pass
+            locs.append([other.x_pos, other.y_pos])
+        return pdist(locs)
+
 
     # polishes acceleration by introducing random acc, and decreases accel over time
     def accel_polish(self):
@@ -120,7 +121,7 @@ class Person:
     def movement(self):
         self.x_pos += self.x_vel
         self.y_pos += self.y_vel
-        if np.absolute(self.x_vel) > MAX_VEL or np.absolute(self.y_vel) > MAX_VEL:
+        if abs(self.x_vel) > MAX_VEL or abs(self.y_vel) > MAX_VEL:
             print("SIR YOU'RE OVER THE SPEED LIMIT")
 
     def limit_accel(self):
