@@ -11,6 +11,6 @@ Each person object will have simulated variables:
   
 Each object will also have user input variables:
   - radius of infection,  
-  - rate of infection - (inputted as probability per second, will be calculated as probability per tick using Poisson(?) distribution),  
+  - rate of infection - (inputted as probability per second, will be calculated as probability per tick using exponential(?) distribution),  
   - distance of social distancing (at what distance will each person start accelerating the other way),
   - "rate" of social distancing (how fast the acceleration will change)
