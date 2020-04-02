@@ -62,7 +62,8 @@ class Person:
                               max(people.index(self), people.index(other))]
                 if d < self.rad_i:
                     # exponential distribution
-                    if (np.random.random_sample() < (1-np.exp(-self.rate_i/FRAME))):
+                    if np.random.random_sample() < (1-np.exp(-self.rate_i/FRAME))\
+                            and other.state == 0:
                         other.state = 1
 
 
