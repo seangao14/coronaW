@@ -25,11 +25,11 @@ START_PERCEPTION = 20
 START_STEERING = 0.05
 
 START_RAD_I = 40
-START_RATE_I = 0.2
+START_RATE_I = 1
 
 RANDOM_ACCEL_COE = 0.01 # lower is less random
 ACCEL_DECAY = 0.8    # lower is more decay
 
 SHOW_VELOCITY = 0
 
-FRAME = 60
+FRAME = 120
