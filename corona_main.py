@@ -19,8 +19,10 @@ def corona_driver():
     test_people = []
 
 
-    for i in range(START_PERSONS):
+    for i in range(START_HEALTHY):
         test_people.append(Person(community, 0))
+    for i in range(START_INFECTED):
+        test_people.append(Person(community, 1))
 
     run = True
     while run:
@@ -46,7 +48,7 @@ def corona_driver():
         pygame.draw.line(window, COLORS[4], (window.get_width() / 2, 0), (window.get_width() / 2, window.get_height()), 2)
         pygame.display.update()
 
-        clock.tick(60)
+        clock.tick(FRAME)
 
     pygame.quit()
 

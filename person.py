@@ -28,7 +28,8 @@ class Person:
     def draw(self, win):
         # Draw person as circle
         pygame.draw.circle(win, COLORS[self.state], (int(self.x_pos), int(self.y_pos)), RADIUS)
-        # pygame.draw.circle(win, colors['y'], (int(self.x_pos), int(self.y_pos)), self.perception, 1)
+        # SHOWS INFECTION RADIUS
+        # pygame.draw.circle(win, COLORS[5], (int(self.x_pos), int(self.y_pos)), self.rad_i, 1)
 
         # Draw velocity vector
         if SHOW_VELOCITY:
@@ -37,10 +38,8 @@ class Person:
 
 
     def update(self, win, people, distances):
-
-        # print(distances)
-
         self.distancing(people, distances, self.perception, self.steering_speed)
+        self.infection(people, distances)
         # self.collision_detection(people)
 
         # applying speeds and cleaning up
@@ -53,13 +52,21 @@ class Person:
 
         self.draw(win)
 
-    def infection(self, people):
+    def infection(self, people, distances):
+        # able to infect others
         if self.state == 1 or self.state == 2:
-            pass
+            for other in people:
+                if self is other:
+                    continue
+                d = distances[min(people.index(self), people.index(other)),
+                              max(people.index(self), people.index(other))]
+                if d < self.rad_i:
+                    # exponential distribution
+                    if (np.random.random_sample() < (1-np.exp(-self.rate_i/FRAME))):
+                        other.state = 1
 
 
-    # TODO: change indexing such that 1 checks 2, 3...
-    #       2 checks 3, 4, etc... so that there are not duplicate calculations
+
     def distancing(self, people, distances, perc, steer):
         steering = np.zeros((2))
         count = 0
@@ -67,7 +74,8 @@ class Person:
             if self is other:
                 continue
             # d = np.sqrt((self.x_pos - other.x_pos) ** 2 + (self.y_pos - other.y_pos) ** 2)
-            d = distances[min(people.index(self), people.index(other)), max(people.index(self), people.index(other))]
+            d = distances[min(people.index(self), people.index(other)),
+                          max(people.index(self), people.index(other))]
             if d < perc:
                 diff = np.array([self.x_pos - other.x_pos, self.y_pos - other.y_pos])
                 diff = diff / (d ** 2)
