@@ -19,6 +19,7 @@ def corona_driver():
 
     test_people = []
     frames = 1
+    heights = []
 
     for i in range(START_HEALTHY):
         test_people.append(Person(community, 0))
@@ -45,7 +46,7 @@ def corona_driver():
         for i in test_people:
             i.update(community, test_people, distances)
 
-        grapher(window, test_people, frames)
+        grapher(window, test_people, frames, heights)
 
         # add subsurfaces to window
         window.blit(community, (int(window.get_width() / 2 + 1), 0))
