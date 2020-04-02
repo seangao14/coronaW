@@ -2,46 +2,53 @@ import pygame
 from person import Person
 from constants import *
 
-pygame.init()
 
-display_width = START_WIDTH
-display_height = START_HEIGHT
+def driver():
+    pygame.init()
 
-window = pygame.display.set_mode((display_width, display_height), pygame.RESIZABLE)
-pygame.display.set_caption("Corona")
-clock = pygame.time.Clock()
+    display_width = START_WIDTH
+    display_height = START_HEIGHT
 
-community = pygame.Surface((int(window.get_width()/2-1), int(window.get_height())))
+    window = pygame.display.set_mode((display_width, display_height), pygame.RESIZABLE)
+    pygame.display.set_caption("Corona")
+    clock = pygame.time.Clock()
 
-test_people = []
+    community = pygame.Surface((int(window.get_width()/2-1), int(window.get_height())))
+
+    test_people = []
 
 
-for i in range(START_PERSONS):
-    test_people.append(Person(community, 0))
+    for i in range(START_PERSONS):
+        test_people.append(Person(community, 0))
 
-run = True
-while run:
-    # events
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            run = False
-        if event.type == pygame.VIDEORESIZE:
-            window = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
-        # print(event)
+    run = True
+    while run:
+        # events
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+            if event.type == pygame.VIDEORESIZE:
+                window = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
+            # print(event)
 
-    # draw surface
-    community = pygame.Surface((int(window.get_width() / 2 - 1), int(window.get_height())))
+        # draw surface
+        community = pygame.Surface((int(window.get_width() / 2 - 1), int(window.get_height())))
 
-    # update objects
-    for i in test_people:
-        i.update(community, test_people)
+        # update objects
+        for i in test_people:
+            i.update(community, test_people)
 
-    # add subsurfaces to window
-    window.blit(community, (int(window.get_width() / 2 + 1), 0))
-    # green middle vertical line
-    pygame.draw.line(window, COLORS[4], (window.get_width() / 2, 0), (window.get_width() / 2, window.get_height()), 2)
-    pygame.display.update()
+        # add subsurfaces to window
+        window.blit(community, (int(window.get_width() / 2 + 1), 0))
+        # green middle vertical line
+        pygame.draw.line(window, COLORS[4], (window.get_width() / 2, 0), (window.get_width() / 2, window.get_height()), 2)
+        pygame.display.update()
 
-    clock.tick(60)
+        clock.tick(60)
 
-pygame.quit()
+    pygame.quit()
+
+
+
+if __name__ == '__main__':
+    driver()

@@ -78,8 +78,7 @@ class Person:
             mag = np.linalg.norm(steering)
             steering = steering * MAX_VEL / mag
             steering -= np.array([self.x_vel, self.y_vel])
-        self.x_accel += steer * steering[0]
-        self.y_accel += steer * steering[1]
+        self.x_accel, self.y_accel = self.x_accel + steer * steering[0], self.y_accel + steer * steering[1]
 
 
     # TODO: WHY THIS IS FUCKED:
@@ -100,36 +99,34 @@ class Person:
     def accel_polish(self):
         self.x_accel += (np.random.random_sample()*2 - 1)*MAX_ACCEL/RANDOM_ACCEL_COE
         self.y_accel += (np.random.random_sample()*2 - 1)*MAX_ACCEL/RANDOM_ACCEL_COE
-        self.x_accel *= ACCEL_DECAY
-        self.y_accel *= ACCEL_DECAY
+
+        self.x_accel, self.y_accel = self.x_accel * ACCEL_DECAY, self.y_accel * ACCEL_DECAY
 
     # ------------------------ SHOULD BE DONE AND DO NOT REQUIRE CHANGES ----------
     # objects will bounce off the edge, and given opposite velocity and acceleration etc
     def edges(self, win):
         if self.x_pos - 0 <= 0:
-            self.x_vel = -self.x_vel
-            self.x_accel = -self.x_accel
+            self.x_vel *= -1
+            self.x_accel *= -1
             self.x_pos = 0
         if self.y_pos - 0 <= 0:
-            self.y_vel = -self.y_vel
-            self.y_accel = -self.y_accel
+            self.y_vel *= -1
+            self.y_accel *= -1
             self.y_pos = 0
         if self.x_pos + 0 >= win.get_width():
-            self.x_vel = -self.x_vel
-            self.x_accel = -self.x_accel
+            self.x_vel *= -1
+            self.x_accel *= -1
             self.x_pos = win.get_width() - 0
         if self.y_pos + 0 >= win.get_height():
-            self.y_vel = -self.y_vel
-            self.y_accel = -self.y_accel
+            self.y_vel *= -1
+            self.y_accel *= -1
             self.y_pos = win.get_height() - 0
 
     def accelerate(self):
-        self.x_vel += self.x_accel
-        self.y_vel += self.y_accel
+        self.x_vel, self.y_vel = self.x_vel + self.x_accel, self.y_vel + self.y_accel
 
     def movement(self):
-        self.x_pos += self.x_vel
-        self.y_pos += self.y_vel
+        self.x_pos, self.y_pos = self.x_pos + self.x_vel, self.y_pos + self.y_vel
         if abs(self.x_vel) > MAX_VEL or abs(self.y_vel) > MAX_VEL:
             print("SIR YOU'RE OVER THE SPEED LIMIT")
 
@@ -201,6 +198,4 @@ class Person:
                 angle = 180
             x_new = self_speed * np.cos(np.radians(angle))
             y_new = self_speed * np.sin(np.radians(angle))
-        self.x_vel = x_new
-        self.y_vel = y_new
-
+        self.x_vel, self.y_vel = x_new, y_new
