@@ -1,7 +1,7 @@
 import numpy as np
 import pygame
 from scipy.spatial.distance import pdist
-from constants import *
+from settings import *
 
 class Person:
     def __init__(self, win, s):

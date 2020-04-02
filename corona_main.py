@@ -1,7 +1,7 @@
 import pygame
 from person import Person
 from helper_funcs import *
-from constants import *
+from settings import *
 
 
 def corona_driver():
