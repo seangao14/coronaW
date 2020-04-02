@@ -36,10 +36,9 @@ class Person:
                                (int(self.x_pos + 5 * self.x_vel), int(self.y_pos + 5 * self.y_vel)))
 
 
-    def update(self, win, people):
-        self.get_distance(people)
+    def update(self, win, people, distances):
 
-        # print(self.distances)
+        print(distances)
 
         self.distancing(people, self.perception, self.steering_speed)
         # self.collision_detection(people)
@@ -81,9 +80,8 @@ class Person:
         self.x_accel, self.y_accel = self.x_accel + steer * steering[0], self.y_accel + steer * steering[1]
 
 
-    # TODO: WHY THIS IS FUCKED:
-    #       should be called every frame, not every object update.
-    def get_distance(self, people):
+    # NOW IMPLEMENTED IN helper_funcs.py SO IT'S CALLED EVERY FRAME RATHER THAN EVERY OBJECTS
+    """    def get_distance(self, people):
         locs = []
         for other in people:
             locs.append([other.x_pos, other.y_pos])
@@ -92,13 +90,13 @@ class Person:
         for i in range(len(people)):
             for j in range(i+1, len(people)):
                 self.distances[i, j] = d[index]
-                index += 1
+    index += 1"""
 
 
     # polishes acceleration by introducing random acc, and decreases accel over time
     def accel_polish(self):
-        self.x_accel += (np.random.random_sample()*2 - 1)*MAX_ACCEL/RANDOM_ACCEL_COE
-        self.y_accel += (np.random.random_sample()*2 - 1)*MAX_ACCEL/RANDOM_ACCEL_COE
+        self.x_accel += (np.random.random_sample()*2 - 1)*MAX_ACCEL*RANDOM_ACCEL_COE
+        self.y_accel += (np.random.random_sample()*2 - 1)*MAX_ACCEL*RANDOM_ACCEL_COE
 
         self.x_accel, self.y_accel = self.x_accel * ACCEL_DECAY, self.y_accel * ACCEL_DECAY
 

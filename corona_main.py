@@ -1,9 +1,10 @@
 import pygame
 from person import Person
+from helper_funcs import *
 from constants import *
 
 
-def driver():
+def corona_driver():
     pygame.init()
 
     display_width = START_WIDTH
@@ -34,9 +35,10 @@ def driver():
         # draw surface
         community = pygame.Surface((int(window.get_width() / 2 - 1), int(window.get_height())))
 
+        distances = get_distance(test_people)
         # update objects
         for i in test_people:
-            i.update(community, test_people)
+            i.update(community, test_people, distances)
 
         # add subsurfaces to window
         window.blit(community, (int(window.get_width() / 2 + 1), 0))
@@ -51,4 +53,4 @@ def driver():
 
 
 if __name__ == '__main__':
-    driver()
+    corona_driver()
