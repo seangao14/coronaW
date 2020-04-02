@@ -38,13 +38,13 @@ class Person:
 
     def update(self, win, people, distances):
 
-        print(distances)
+        # print(distances)
 
-        self.distancing(people, self.perception, self.steering_speed)
+        self.distancing(people, distances, self.perception, self.steering_speed)
         # self.collision_detection(people)
-        self.accel_polish()
 
         # applying speeds and cleaning up
+        self.accel_polish()
         self.edges(win)
         self.limit_accel()
         self.accelerate()
@@ -60,13 +60,14 @@ class Person:
 
     # TODO: change indexing such that 1 checks 2, 3...
     #       2 checks 3, 4, etc... so that there are not duplicate calculations
-    def distancing(self, people, perc, steer):
+    def distancing(self, people, distances, perc, steer):
         steering = np.zeros((2))
         count = 0
         for other in people:
             if self is other:
                 continue
-            d = np.sqrt((self.x_pos - other.x_pos) ** 2 + (self.y_pos - other.y_pos) ** 2)
+            # d = np.sqrt((self.x_pos - other.x_pos) ** 2 + (self.y_pos - other.y_pos) ** 2)
+            d = distances[min(people.index(self), people.index(other)), max(people.index(self), people.index(other))]
             if d < perc:
                 diff = np.array([self.x_pos - other.x_pos, self.y_pos - other.y_pos])
                 diff = diff / (d ** 2)
@@ -90,7 +91,8 @@ class Person:
         for i in range(len(people)):
             for j in range(i+1, len(people)):
                 self.distances[i, j] = d[index]
-    index += 1"""
+    index += 1
+    """
 
 
     # polishes acceleration by introducing random acc, and decreases accel over time
