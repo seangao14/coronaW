@@ -14,3 +14,6 @@ Each object will also have user input variables:
   - rate of infection - (inputted as probability per second, will be calculated as probability per tick using exponential(?) distribution),  
   - distance of social distancing (at what distance will each person start accelerating the other way),
   - "rate" of social distancing (how fast the acceleration will change)
+
+
+... as typical of a hobbyist developer project, this is left unfinished although the basic functions are done
