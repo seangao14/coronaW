@@ -56,6 +56,7 @@ def corona_driver():
         pygame.display.update()
 
         clock.tick(FRAME)
+        print(frames)
         frames += 1
 
     pygame.quit()
